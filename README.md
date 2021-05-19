@@ -11,6 +11,8 @@ Step 3: Show a toast message!
 lovelyToasts.show("This is a Lövely toast :)")
 ```
 
+For best looking toast, set `t.window.msaa` in your conf.lua to 16
+
 ## Customization
 Other than the toast message you can also pass a duration and position
 ```lua
