@@ -1,7 +1,7 @@
 # Lövely Toasts: toasts for Löve2D
 ![](https://i.imgur.com/yWbfz0l.gif)
 ## Usage
-Step 1: Place the "lovelyToasts.lua" library somewhere in your source folder (e.g. "/lib/soupy.lua")<br/>
+Step 1: Place the "lovelyToasts.lua" library somewhere in your source folder (e.g. "/lib/soupy.lua")<br/><br/>
 Step 2: Add a variable to require the library in your main.lua file:
 ```lua
 lovelyToasts = require("lib.lovelyToasts")
@@ -11,7 +11,7 @@ Step 3: Show a toast message!
 lovelyToasts.show("This is a Lövely toast :)")
 ```
 
-For best looking toast, set `t.window.msaa` in your conf.lua to 16
+For best looking toasts, set `t.window.msaa` in your conf.lua to 16
 
 ## Customization
 Other than the toast message you can also pass a duration and position
