@@ -1,5 +1,5 @@
 # Lövely Toasts: toasts for Löve2D
-
+![](https://i.imgur.com/yWbfz0l.gif)
 ## Usage
 Step 1: Place the "lovelyToasts.lua" library somewhere in your source folder (e.g. "/lib/soupy.lua")<br/>
 Step 2: Add a variable to require the library in your main.lua file:
