@@ -6,7 +6,17 @@ Step 2: Add a variable to require the library in your main.lua file:
 ```lua
 lovelyToasts = require("lib.lovelyToasts")
 ```
-Step 3: Show a toast message!
+Step 3: Call lovelyToast's draw and update functions
+```lua
+function love.update(dt)
+  lovelyToasts.update(dt)
+end
+
+function love.draw()
+  lovelyToasts.draw()
+end
+```
+Step 4: Show a toast message!
 ```lua
 lovelyToasts.show("This is a Lövely toast :)")
 ```
