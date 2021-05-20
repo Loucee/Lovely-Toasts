@@ -43,5 +43,17 @@ Various attributes of the toast message can be changed by changing the values in
 - **lovelyToasts.options.queueEnabled** (set to false by default)<br/>When set to true the toasts don't replace, but enter a queue so you can queue multiple toasts in a row
 - **lovelyToasts.options.animationDuration** (set to 0.3 by default)<br/>Animation duration for appear and disappear animation
 
+### NOTE
+In order for `lovelyToasts.options.tapToDismiss` to work you need to implement Love's mousereleased for mouse and/or touchreleased for touch screens such a mobile devices.
+```lua
+function love.mousereleased(x, y, button)
+  lovelyToasts.mousereleased(x, y, button)
+end
+
+function love.touchreleased(id, x, y, dx, dy, pressure)
+  lovelyToasts.touchreleased(id, x, y, dx, dy, pressure)
+end
+```
+
 ## License
 MIT
