@@ -97,7 +97,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function lovelyToasts.new(text, duration, position)
+function lovelyToasts.show(text, duration, position)
 	local t = {
 		_timePassed = 0,
 		_alpha = 0,
