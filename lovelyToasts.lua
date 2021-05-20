@@ -5,7 +5,6 @@
 	GitHub: https://github.com/Loucee/Lovely-Toasts
 ]]
 
-local screenW, screenH = love.graphics.getDimensions()
 local yOffset = 15
 
 local lovelyToasts = {
@@ -59,7 +58,7 @@ function lovelyToasts.draw()
 
 		local textWidth = lovelyToasts.style.font:getWidth(current.text)
 		local textHeight = lovelyToasts.style.font:getHeight()
-		local textX = (screenW / 2) - (textWidth / 2)
+		local textX = (love.graphics.getWidth() / 2) - (textWidth / 2)
 		local textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
 
 		-- Draw toast background
@@ -117,6 +116,7 @@ end
 --------------------------------------------------------------------------------
 
 function lovelyToasts._yForPosition(pos)
+	local screenH = love.graphics.getHeight()
 	if (pos == "bottom") then
 		return screenH * 0.8
 	elseif (pos == "top") then
@@ -133,7 +133,7 @@ function lovelyToasts._dismissOnTouch(x, y)
 
 		local toastWidth = lovelyToasts.style.font:getWidth(current.text) + (lovelyToasts.style.paddingLR * 2)
 		local toastHeight = lovelyToasts.style.font:getHeight() + (lovelyToasts.style.paddingTB * 2)
-		local toastX = (screenW / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
+		local toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
 		local toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
 
 		if (x > toastX) and (x < toastX + toastWidth) and (y > toastY) and (y < toastY + toastHeight) then
