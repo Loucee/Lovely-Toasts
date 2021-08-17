@@ -8,6 +8,7 @@
 local yOffset = 15
 
 local lovelyToasts = {
+	canvasSize = { },
 	style = {
 		font = love.graphics.newFont(16),
 		textColor = { 1, 1, 1, 1},
@@ -50,6 +51,7 @@ end
 
 function lovelyToasts.draw()
 	if #_toasts > 0 then
+		local screenW = lovelyToasts.canvasSize[1] or love.graphics.getWidth()
 		local current = _toasts[1]
 
 		-- Store current font and color to restore later
@@ -58,7 +60,7 @@ function lovelyToasts.draw()
 
 		local textWidth = lovelyToasts.style.font:getWidth(current.text)
 		local textHeight = lovelyToasts.style.font:getHeight()
-		local textX = (love.graphics.getWidth() / 2) - (textWidth / 2)
+		local textX = (screenW / 2) - (textWidth / 2)
 		local textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
 
 		-- Draw toast background
@@ -116,7 +118,7 @@ end
 --------------------------------------------------------------------------------
 
 function lovelyToasts._yForPosition(pos)
-	local screenH = love.graphics.getHeight()
+	local screenH = lovelyToasts.canvasSize[2] or love.graphics.getHeight()
 	if (pos == "bottom") then
 		return screenH * 0.8
 	elseif (pos == "top") then
