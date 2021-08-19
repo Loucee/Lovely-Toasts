@@ -54,5 +54,26 @@ function love.touchreleased(id, x, y, dx, dy, pressure)
 end
 ```
 
+- **lovelyToasts.canvasSize**<br/>If you're using a rendering library such as TLfres to scale your game you might run into issues where LT doesn't renders toasts in the center of the screen, to fix this issue you just have to pass the canvas size you're rendering your game for to LT's canvasSize property.
+
+Example:
+```lua
+local CANVAS_WIDTH = 1920
+local CANVAS_HEIGHT = 1080
+
+function love.load()
+	--
+
+	LovelyToasts.canvasSize = { CANVAS_WIDTH, CANVAS_HEIGHT }
+end
+
+function love.draw()
+	tlfres.beginRendering(CANVAS_WIDTH, CANVAS_HEIGHT)
+	love.graphics.setBackgroundColor(1, 1, 1)
+	LovelyToasts.draw()
+	tlfres.endRendering()
+end
+```
+
 ## License
 MIT
