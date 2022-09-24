@@ -32,6 +32,9 @@ lovelyToasts.show("Lövely toast :)", 2, "top")
 ```
 This will create a toast messsage at the top of the screen that appears for 2 seconds. Other options for the position are "middle", to put the toast in the center of the screen, "bottom", the default value, or a number for the Y position.
 
+You can specify a screen x and y value to display it anywhere on the screen. This is useful to display a toast message next to some item on the screen.
+lovelyToasts.show("Lövely toast :)", 2, nil, 700, 500)
+
 ### Styling
 Various attributes of the toast message can be changed by changing the values in `lovelyToasts.style`
 - **lovelyToasts.style.font** The font to use for the toast message
