@@ -126,6 +126,7 @@ function lovelyToasts.show(text, duration, position, xpos, ypos)
 
 	if (lovelyToasts.options.queueEnabled) then
 		table.insert(_toasts, t)
+		print("Hi")
 	else
 		_toasts = { t }
 	end
@@ -151,13 +152,19 @@ function lovelyToasts._dismissOnTouch(x, y)
 
 		local toastWidth = lovelyToasts.style.font:getWidth(current.text) + (lovelyToasts.style.paddingLR * 2)
 		local toastHeight = lovelyToasts.style.font:getHeight() + (lovelyToasts.style.paddingTB * 2)
-		local toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
+
+		local toastX
+		if current.xpos == nil then
+			toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
+		else
+			toastX = current.xpos -  (toastWidth / 2) - lovelyToasts.style.paddingLR
+		end
 
 		local toastY
-		if lovelyToasts.ypos == nil then
+		if current.ypos == nil then
 			toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
 		else
-			toastY = lovelyToasts.ypos - (toastHeight / 2) - lovelyToasts.style.paddingTB
+			toastY = current.ypos - (toastHeight / 2) - lovelyToasts.style.paddingTB
 		end
 
 		if (x > toastX) and (x < toastX + toastWidth) and (y > toastY) and (y < toastY + toastHeight) then
