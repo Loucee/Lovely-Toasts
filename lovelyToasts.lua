@@ -126,7 +126,6 @@ function lovelyToasts.show(text, duration, position, xpos, ypos)
 
 	if (lovelyToasts.options.queueEnabled) then
 		table.insert(_toasts, t)
-		print("Hi")
 	else
 		_toasts = { t }
 	end
