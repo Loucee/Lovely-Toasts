@@ -42,6 +42,10 @@ Various attributes of the toast message can be changed by changing the values in
 - **lovelyToasts.style.font** The font to use for the toast message
 - **lovelyToasts.style.textColor** The color of the text
 - **lovelyToasts.style.backgroundColor** The color of the toast
+```lua
+lovelyToasts.style.backgroundColor = {151,151,151}
+```
+
 - **lovelyToasts.style.paddingLR** Left and right padding in the toast
 - **lovelyToasts.style.paddingTB** Top and bottom padding in the toast
 
