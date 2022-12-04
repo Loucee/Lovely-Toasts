@@ -60,6 +60,7 @@ function lovelyToasts.draw()
 		local r, g, b, a = love.graphics.getColor()
 		local font = love.graphics.getFont()
 
+		if current.text == nil then current.text = "" end
 		local textWidth = lovelyToasts.style.font:getWidth(current.text)
 		local textHeight = lovelyToasts.style.font:getHeight()
 
