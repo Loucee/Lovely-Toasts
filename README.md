@@ -59,6 +59,10 @@ lovelyToasts.style.paddingTB = 10
 
 ### Other options
 - **lovelyToasts.options.tapToDismiss** (set to false by default)<br/>Allows user to tap or click on the toast message to dismiss it
+```lua
+lovelyToasts.options.tapToDismiss = true
+```
+
 - **lovelyToasts.options.queueEnabled** (set to false by default)<br/>When set to true the toasts don't replace, but enter a queue so you can queue multiple toasts in a row
 - **lovelyToasts.options.animationDuration** (set to 0.3 by default)<br/>Animation duration for appear and disappear animation
 
