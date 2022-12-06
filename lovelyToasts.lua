@@ -9,6 +9,8 @@ local yOffset = 15
 
 local lovelyToasts = {
 	canvasSize = { },
+	xpos,
+	ypos,
 	style = {
 		font = love.graphics.newFont(16),
 		textColor = { 1, 1, 1, 1},
@@ -41,7 +43,7 @@ function lovelyToasts.update(dt)
 			current._alpha = math.max(0, current._alpha - (100 / lovelyToasts.options.animationDuration * dt))
 		end
 		current._yOffset = math.max(0, current._yOffset - (yOffset / lovelyToasts.options.animationDuration * dt))
-		
+
 		-- Remove toast when duration ended
 		if (current._timePassed >= current.duration) then
 			table.remove(_toasts, 1)
@@ -58,15 +60,28 @@ function lovelyToasts.draw()
 		local r, g, b, a = love.graphics.getColor()
 		local font = love.graphics.getFont()
 
+		if current.text == nil then current.text = "" end
 		local textWidth = lovelyToasts.style.font:getWidth(current.text)
 		local textHeight = lovelyToasts.style.font:getHeight()
-		local textX = (screenW / 2) - (textWidth / 2)
-		local textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
+
+		local textX
+		if current.xpos == nil then
+			textX = (love.graphics.getWidth() / 2) - (textWidth / 2)
+		else
+			textX = current.xpos - (textWidth / 2)
+		end
+
+		local textY
+		if current.ypos == nil then
+			textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
+		else
+			textY = current.ypos - (textHeight / 2) + current._yOffset
+		end
 
 		-- Draw toast background
 		local bgR, bgG, bgB, bgA = unpack(lovelyToasts.style.backgroundColor)
 		love.graphics.setColor(bgR, bgG, bgB, (bgA or 0.5) * (current._alpha / 100))
-		love.graphics.rectangle("fill", 
+		love.graphics.rectangle("fill",
 			textX - lovelyToasts.style.paddingLR,
 			textY - lovelyToasts.style.paddingTB,
 			textWidth + (lovelyToasts.style.paddingLR * 2),
@@ -98,14 +113,16 @@ end
 
 --------------------------------------------------------------------------------
 
-function lovelyToasts.show(text, duration, position)
+function lovelyToasts.show(text, duration, position, xpos, ypos)
 	local t = {
 		_timePassed = 0,
 		_alpha = 0,
 		_yOffset = yOffset,
 		text = text,
 		duration = (duration or 3) + (lovelyToasts.options.animationDuration * 2),
-		position = position or "bottom"
+		position = position or "bottom",
+		xpos = xpos,
+		ypos = ypos
 	}
 
 	if (lovelyToasts.options.queueEnabled) then
@@ -135,8 +152,20 @@ function lovelyToasts._dismissOnTouch(x, y)
 
 		local toastWidth = lovelyToasts.style.font:getWidth(current.text) + (lovelyToasts.style.paddingLR * 2)
 		local toastHeight = lovelyToasts.style.font:getHeight() + (lovelyToasts.style.paddingTB * 2)
-		local toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
-		local toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
+
+		local toastX
+		if current.xpos == nil then
+			toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
+		else
+			toastX = current.xpos -  (toastWidth / 2) - lovelyToasts.style.paddingLR
+		end
+
+		local toastY
+		if current.ypos == nil then
+			toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
+		else
+			toastY = current.ypos - (toastHeight / 2) - lovelyToasts.style.paddingTB
+		end
 
 		if (x > toastX) and (x < toastX + toastWidth) and (y > toastY) and (y < toastY + toastHeight) then
 			table.remove(_toasts, 1)

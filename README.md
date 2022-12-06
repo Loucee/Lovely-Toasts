@@ -32,16 +32,37 @@ lovelyToasts.show("Lövely toast :)", 2, "top")
 ```
 This will create a toast messsage at the top of the screen that appears for 2 seconds. Other options for the position are "middle", to put the toast in the center of the screen, "bottom", the default value, or a number for the Y position.
 
+You can specify a screen x and y value to display it anywhere on the screen. This is useful to display a toast message next to some item on the screen.
+```lua
+lovelyToasts.show("Lövely toast :)", 2, nil, 700, 500)
+```
+
 ### Styling
 Various attributes of the toast message can be changed by changing the values in `lovelyToasts.style`
 - **lovelyToasts.style.font** The font to use for the toast message
 - **lovelyToasts.style.textColor** The color of the text
+```lua
+loevelyToasts.textColor = {1,1,1}
+```
 - **lovelyToasts.style.backgroundColor** The color of the toast
+```lua
+lovelyToasts.style.backgroundColor = {151,151,151}
+```
 - **lovelyToasts.style.paddingLR** Left and right padding in the toast
+```lua
+lovelyToasts.style.paddingLR = 25
+```
 - **lovelyToasts.style.paddingTB** Top and bottom padding in the toast
+```lua
+lovelyToasts.style.paddingTB = 10
+```
 
 ### Other options
 - **lovelyToasts.options.tapToDismiss** (set to false by default)<br/>Allows user to tap or click on the toast message to dismiss it
+```lua
+lovelyToasts.options.tapToDismiss = true
+```
+
 - **lovelyToasts.options.queueEnabled** (set to false by default)<br/>When set to true the toasts don't replace, but enter a queue so you can queue multiple toasts in a row
 - **lovelyToasts.options.animationDuration** (set to 0.3 by default)<br/>Animation duration for appear and disappear animation
 
