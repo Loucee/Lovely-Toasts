@@ -2,7 +2,7 @@
 Made and tested in Löve2D v11.3
 
 This is a fork from https://github.com/Loucee/Lovely-Toasts which appears to be abandoned.
-All credit goes to Loucee
+All credit goes to Loucee.
 
 ![](https://i.imgur.com/yWbfz0l.gif)
 ## Usage
@@ -60,7 +60,7 @@ lovelyToasts.style.paddingLR = 25
 lovelyToasts.style.paddingTB = 10
 ```
 
-### Other options
+### Other options - usually set once in love.load()
 - **lovelyToasts.options.tapToDismiss** (set to false by default)<br/>Allows user to tap or click on the toast message to dismiss it
 ```lua
 lovelyToasts.options.tapToDismiss = true
