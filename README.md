@@ -1,6 +1,9 @@
 # Lövely Toasts: toasts for Löve2D
 Made and tested in Löve2D v11.3
 
+This is a fork from https://github.com/Loucee/Lovely-Toasts which appears to be abandoned.
+All credit goes to Loucee
+
 ![](https://i.imgur.com/yWbfz0l.gif)
 ## Usage
 Step 1: Place the "lovelyToasts.lua" library somewhere in your source folder (e.g. "/lib/soupy.lua")<br/><br/>
