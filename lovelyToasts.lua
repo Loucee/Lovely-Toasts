@@ -8,9 +8,6 @@
 local yOffset = 15
 
 local lovelyToasts = {
-	canvasSize = { },
-	xpos,
-	ypos,
 	style = {
 		font = love.graphics.newFont(16),
 		textColor = { 1, 1, 1, 1},
@@ -53,51 +50,42 @@ end
 
 function lovelyToasts.draw()
 	if #_toasts > 0 then
-		local screenW = lovelyToasts.canvasSize[1] or love.graphics.getWidth()
 		local current = _toasts[1]
 
-		-- Store current font and color to restore later
-		local r, g, b, a = love.graphics.getColor()
-		local font = love.graphics.getFont()
+		if current.text ~= nil then
 
-		if current.text == nil then current.text = "" end
-		local textWidth = lovelyToasts.style.font:getWidth(current.text)
-		local textHeight = lovelyToasts.style.font:getHeight()
+			-- Store current font and color to restore later
+			local r, g, b, a = love.graphics.getColor()
+			local font = love.graphics.getFont()
 
-		local textX
-		if current.xpos == nil then
-			textX = (love.graphics.getWidth() / 2) - (textWidth / 2)
+			local textWidth = lovelyToasts.style.font:getWidth(current.text)
+			local textHeight = lovelyToasts.style.font:getHeight()
+			local textX = (love.graphics.getWidth() / 2) - (textWidth / 2)
+			local textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
+
+			-- Draw toast background
+			local bgR, bgG, bgB, bgA = unpack(lovelyToasts.style.backgroundColor)
+			love.graphics.setColor(bgR, bgG, bgB, (bgA or 0.5) * (current._alpha / 100))
+			love.graphics.rectangle("fill",
+				textX - lovelyToasts.style.paddingLR,
+				textY - lovelyToasts.style.paddingTB,
+				textWidth + (lovelyToasts.style.paddingLR * 2),
+				textHeight + (lovelyToasts.style.paddingTB * 2),
+				10, 10, 1000
+			)
+
+			-- Draw toast title
+			local tR, tG, tB, tA = unpack(lovelyToasts.style.textColor)
+			love.graphics.setColor(tR, tG, tB, (tA or 1) * (current._alpha / 100))
+			love.graphics.setFont(lovelyToasts.style.font)
+			love.graphics.print(current.text, textX, textY)
+
+			-- Restore color and font
+			love.graphics.setColor(r, g, b, a)
+			love.graphics.setFont(font)
 		else
-			textX = current.xpos - (textWidth / 2)
+			print("lovelyToasts error: text provided is nil. No toast displayed")
 		end
-
-		local textY
-		if current.ypos == nil then
-			textY = lovelyToasts._yForPosition(current.position) - (textHeight / 2) + current._yOffset
-		else
-			textY = current.ypos - (textHeight / 2) + current._yOffset
-		end
-
-		-- Draw toast background
-		local bgR, bgG, bgB, bgA = unpack(lovelyToasts.style.backgroundColor)
-		love.graphics.setColor(bgR, bgG, bgB, (bgA or 0.5) * (current._alpha / 100))
-		love.graphics.rectangle("fill",
-			textX - lovelyToasts.style.paddingLR,
-			textY - lovelyToasts.style.paddingTB,
-			textWidth + (lovelyToasts.style.paddingLR * 2),
-			textHeight + (lovelyToasts.style.paddingTB * 2),
-			10, 10, 1000
-		)
-
-		-- Draw toast title
-		local tR, tG, tB, tA = unpack(lovelyToasts.style.textColor)
-		love.graphics.setColor(tR, tG, tB, (tA or 1) * (current._alpha / 100))
-		love.graphics.setFont(lovelyToasts.style.font)
-		love.graphics.print(current.text, textX, textY)
-
-		-- Restore color and font
-		love.graphics.setColor(r, g, b, a)
-		love.graphics.setFont(font)
 	end
 end
 
@@ -113,16 +101,14 @@ end
 
 --------------------------------------------------------------------------------
 
-function lovelyToasts.show(text, duration, position, xpos, ypos)
+function lovelyToasts.show(text, duration, position)
 	local t = {
 		_timePassed = 0,
 		_alpha = 0,
 		_yOffset = yOffset,
 		text = text,
 		duration = (duration or 3) + (lovelyToasts.options.animationDuration * 2),
-		position = position or "bottom",
-		xpos = xpos,
-		ypos = ypos
+		position = position or "bottom"
 	}
 
 	if (lovelyToasts.options.queueEnabled) then
@@ -135,7 +121,7 @@ end
 --------------------------------------------------------------------------------
 
 function lovelyToasts._yForPosition(pos)
-	local screenH = lovelyToasts.canvasSize[2] or love.graphics.getHeight()
+	local screenH = love.graphics.getHeight()
 	if (pos == "bottom") then
 		return screenH * 0.8
 	elseif (pos == "top") then
@@ -152,20 +138,8 @@ function lovelyToasts._dismissOnTouch(x, y)
 
 		local toastWidth = lovelyToasts.style.font:getWidth(current.text) + (lovelyToasts.style.paddingLR * 2)
 		local toastHeight = lovelyToasts.style.font:getHeight() + (lovelyToasts.style.paddingTB * 2)
-
-		local toastX
-		if current.xpos == nil then
-			toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
-		else
-			toastX = current.xpos -  (toastWidth / 2) - lovelyToasts.style.paddingLR
-		end
-
-		local toastY
-		if current.ypos == nil then
-			toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
-		else
-			toastY = current.ypos - (toastHeight / 2) - lovelyToasts.style.paddingTB
-		end
+		local toastX = (love.graphics.getWidth() / 2) - (toastWidth / 2) - lovelyToasts.style.paddingLR
+		local toastY = lovelyToasts._yForPosition(current.position) - (toastHeight / 2) - lovelyToasts.style.paddingTB
 
 		if (x > toastX) and (x < toastX + toastWidth) and (y > toastY) and (y < toastY + toastHeight) then
 			table.remove(_toasts, 1)
